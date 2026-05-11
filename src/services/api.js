@@ -25,3 +25,53 @@ export const api = axios.create({
   timeout: 12000,
   headers: { Accept: 'application/json' },
 })
+
+function logApiFailure(error) {
+  const cfg = error.config
+  const method = (cfg?.method || 'GET').toUpperCase()
+  let fullUrl = '(sin URL)'
+  try {
+    fullUrl = cfg ? axios.getUri(cfg) : fullUrl
+  } catch {
+    fullUrl = cfg?.baseURL && cfg?.url ? `${cfg.baseURL}${cfg.url}` : fullUrl
+  }
+
+  if (error.response) {
+    const { status, statusText, data } = error.response
+    // eslint-disable-next-line no-console
+    console.error('[api] Respuesta de error del servidor', {
+      method,
+      url: fullUrl,
+      status,
+      statusText,
+      body: data,
+    })
+    return
+  }
+
+  if (error.request) {
+    // eslint-disable-next-line no-console
+    console.error('[api] Sin respuesta (red, CORS, proxy o servidor caído)', {
+      method,
+      url: fullUrl,
+      code: error.code,
+      message: error.message,
+    })
+    return
+  }
+
+  // eslint-disable-next-line no-console
+  console.error('[api] Error al preparar la petición', {
+    method,
+    url: fullUrl,
+    message: error.message,
+  })
+}
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    logApiFailure(error)
+    return Promise.reject(error)
+  },
+)
