@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import MainLayout from './layouts/MainLayout'
+import GuestUploadLayout from './layouts/GuestUploadLayout'
 import HomePage from './pages/HomePage'
 import FantasyRouteLoader from './components/FantasyRouteLoader'
 
@@ -8,13 +8,13 @@ const AdminLayout = lazy(() => import('./layouts/AdminLayout'))
 const AdminPage = lazy(() => import('./pages/AdminPage'))
 
 /**
- * Rutas públicas bajo MainLayout. Admin con code-splitting (chunk separado).
+ * Home pública: solo subida de recuerdos. Admin con code-splitting (chunk separado).
  */
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<MainLayout />}>
+        <Route element={<GuestUploadLayout />}>
           <Route path="/" element={<HomePage />} />
         </Route>
         <Route

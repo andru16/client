@@ -8,6 +8,7 @@ import {
 import { uploadPhotosInBatches } from '../../services/photoService'
 import { getFriendlyErrorMessage } from '../../utils/httpErrorMessage'
 import UploadSuccessOverlay from './UploadSuccessOverlay'
+import WonderlandFormCorners from '../guest/WonderlandFormCorners'
 
 const ACCEPT_IMAGE = 'image/jpeg,image/png,image/webp,image/gif'
 const ACCEPT_VIDEO = 'video/mp4,video/webm,video/quicktime'
@@ -232,8 +233,9 @@ export default function UploadSection({
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_100%_80%_at_50%_-20%,rgba(201,162,39,0.12),transparent_50%)]" />
           <div className="absolute right-0 top-0 h-40 w-40 rounded-full bg-wonder-amethyst/10 blur-3xl" />
           <div className="absolute bottom-0 left-0 h-32 w-32 rounded-full bg-wonder-blush/5 blur-2xl" />
+          <WonderlandFormCorners />
 
-          <div className="relative space-y-8">
+          <div className="relative z-10 space-y-8">
             <header className="text-center">
               <p className="font-display text-[0.65rem] uppercase tracking-[0.48em] text-wonder-gold-soft">
                 Jardín de recuerdos
