@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#120b24"/>
+      <stop offset="50%" stop-color="#0a0618"/>
+      <stop offset="100%" stop-color="#2a1a4a"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#c9a227"/>
+      <stop offset="100%" stop-color="#e8d48b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="900" cy="120" r="180" fill="#5c3d8f" opacity="0.25"/>
+  <circle cx="200" cy="520" r="220" fill="#e8b4c8" opacity="0.08"/>
+  <text x="600" y="280" text-anchor="middle" fill="url(#gold)" font-family="Georgia, serif" font-size="42" letter-spacing="0.35em">
+    WONDERLAND XV
+  </text>
+  <text x="600" y="360" text-anchor="middle" fill="#f5d0e0" font-family="Georgia, serif" font-size="28" opacity="0.9">
+    Alicia en el Pa�s de las Maravillas
+  </text>
+  <text x="600" y="420" text-anchor="middle" fill="#e8d48b" font-family="Georgia, serif" font-size="18" opacity="0.65" letter-spacing="0.2em">
+    Una noche fuera del tiempo
+  </text>
+</svg>

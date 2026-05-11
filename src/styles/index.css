@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-svh antialiased text-rose-100/90 bg-wonder-void;
+    font-family: theme('fontFamily.body');
+    font-size: 1.125rem;
+    line-height: 1.65;
+  }
+
+  ::selection {
+    @apply bg-wonder-amethyst/50 text-white;
+  }
+}
