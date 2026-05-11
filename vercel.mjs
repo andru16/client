@@ -1,17 +1,35 @@
 /**
  * Configuración Vercel del FRONT: proxy de `/api/*` hacia el backend.
- * Así el navegador solo habla con `*.vercel.app` (sin CORS extra) y Vercel reenvía al API.
  *
- * Define en el proyecto del cliente (Production + Preview):
+ * En Vercel → proyecto del cliente → Environment Variables (Production y Preview):
  *   VITE_API_URL=https://tu-backend.vercel.app
- * (con o sin `/api` al final; debe ser https público.)
+ * (con o sin `/api`; debe ser https en producción para el destino del rewrite.)
+ *
+ * Sin esta variable el build **sí termina**, pero las peticiones a `/api/*` van al SPA
+ * y los POST pueden devolver 405 hasta que la definas y vuelvas a desplegar.
  */
 function backendHttpsOrigin() {
   const raw = process.env.VITE_API_URL?.trim()
-  if (!raw) return ''
+  if (!raw) {
+    if (process.env.VERCEL === '1') {
+      // eslint-disable-next-line no-console
+      console.warn(
+        '[vercel.mjs] Falta VITE_API_URL: no hay proxy /api → backend. ' +
+          'Añádela en Settings → Environment Variables y redeploy.',
+      )
+    }
+    return ''
+  }
   let u = raw.replace(/\/$/, '')
   if (u.toLowerCase().endsWith('/api')) u = u.slice(0, -4)
-  if (!/^https:\/\//i.test(u)) return ''
+  if (!/^https:\/\//i.test(u)) {
+    // eslint-disable-next-line no-console
+    console.warn(
+      '[vercel.mjs] VITE_API_URL debe ser HTTPS para el rewrite (ej. https://tu-api.vercel.app). Valor ignorado:',
+      raw,
+    )
+    return ''
+  }
   return u.replace(/\/$/, '')
 }
 
@@ -32,17 +50,4 @@ export const config = {
   buildCommand: 'npm run build',
   outputDirectory: 'dist',
   rewrites,
-}
-
-const failIfMissingBackend =
-  process.env.VERCEL === '1' &&
-  process.env.VERCEL_ENV !== 'development' &&
-  !apiOrigin
-
-if (failIfMissingBackend) {
-  throw new Error(
-    '[client/vercel.mjs] Falta VITE_API_URL (URL HTTPS del servidor API). ' +
-      'En Vercel → proyecto del cliente → Settings → Environment Variables (Production y Preview). ' +
-      'Ejemplo: VITE_API_URL=https://tu-api.vercel.app',
-  )
 }
